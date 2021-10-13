@@ -37,7 +37,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Имена</th>
                     </tr>
                     </thead>
                     <tbody>
