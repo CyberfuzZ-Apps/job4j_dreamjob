@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Класс PostServlet
+ * Класс PostServlet - сервлет списка вакансий.
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
@@ -26,7 +26,7 @@ public class PostServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         req.setCharacterEncoding("UTF-8");
         Store.instOf().save(
                 new Post(

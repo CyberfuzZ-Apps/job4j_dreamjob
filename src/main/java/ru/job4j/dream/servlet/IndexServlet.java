@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Класс IndexServlet
+ * Класс IndexServlet - сервлет главной страницы.
  *
  * @author Evgeniy Zaytsev
  * @version 1.0

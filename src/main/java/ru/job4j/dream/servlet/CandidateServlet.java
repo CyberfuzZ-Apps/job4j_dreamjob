@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Класс CandidateServlet
+ * Класс CandidateServlet - сервлет списка кандидатов.
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
@@ -26,7 +26,7 @@ public class CandidateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         req.setCharacterEncoding("UTF-8");
         Store.instOf().save(new Candidate(
                 Integer.parseInt(req.getParameter("id")),
