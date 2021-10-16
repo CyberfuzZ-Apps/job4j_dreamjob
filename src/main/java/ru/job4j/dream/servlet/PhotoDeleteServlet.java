@@ -1,5 +1,7 @@
 package ru.job4j.dream.servlet;
 
+import ru.job4j.dream.Config;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +19,9 @@ public class PhotoDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
+        String path = Config.value("path");
         String id = req.getParameter("id");
-        File file = new File("/Users/cyberfuzz/images/" + id);
+        File file = new File(path + id);
         file.delete();
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }

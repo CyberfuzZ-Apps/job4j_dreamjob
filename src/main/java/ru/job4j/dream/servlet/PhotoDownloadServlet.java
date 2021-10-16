@@ -1,5 +1,7 @@
 package ru.job4j.dream.servlet;
 
+import ru.job4j.dream.Config;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +21,10 @@ public class PhotoDownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
+        String path = Config.value("path");
         String name = req.getParameter("name");
         File downloadFile = null;
-        for (File file : Objects.requireNonNull(new File("/Users/cyberfuzz/images").listFiles())) {
+        for (File file : Objects.requireNonNull(new File(path).listFiles())) {
             if (name.equals(file.getName())) {
                 downloadFile = file;
                 break;

@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.dream.Config;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -38,9 +39,10 @@ public class PhotoUploadServlet extends HttpServlet {
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
         factory.setRepository(repository);
         ServletFileUpload upload = new ServletFileUpload(factory);
+        String path = Config.value("path");
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("/Users/cyberfuzz/images");
+            File folder = new File(path);
             if (!folder.exists()) {
                 folder.mkdir();
             }
