@@ -5,6 +5,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -97,6 +98,11 @@ public class PsqlStore implements Store {
             LOG.error("Database error:", e);
         }
         return candidates;
+    }
+
+    @Override
+    public Collection<User> findAllUsers() {
+        return null;
     }
 
     @Override
@@ -195,6 +201,11 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public void save(User user) {
+
+    }
+
+    @Override
     public Post findPostById(int id) {
         Post post = null;
         try (Connection cn = pool.getConnection();
@@ -234,5 +245,15 @@ public class PsqlStore implements Store {
             LOG.error("Database error:", e);
         }
         return candidate;
+    }
+
+    @Override
+    public User findUserById(int id) {
+        return null;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return null;
     }
 }
