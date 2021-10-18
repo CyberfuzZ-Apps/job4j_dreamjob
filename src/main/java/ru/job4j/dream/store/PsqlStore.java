@@ -35,13 +35,13 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("IO Error:", e);
             throw new IllegalStateException(e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database driver error:", e);
             throw new IllegalStateException(e);
         }
         pool.setDriverClassName(cfg.getProperty("jdbc.driver"));
@@ -75,7 +75,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return posts;
     }
@@ -94,7 +94,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return candidates;
     }
@@ -122,7 +122,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return post;
     }
@@ -142,7 +142,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return result;
     }
@@ -169,7 +169,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return candidate;
     }
@@ -189,7 +189,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return result;
     }
@@ -210,7 +210,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return post;
     }
@@ -231,7 +231,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("Database error:", e);
         }
         return candidate;
     }
