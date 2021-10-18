@@ -18,6 +18,22 @@
     <title>Загрузка фото</title>
 </head>
 <body>
+<div class="container pt-3">
+    <div class="row">
+        <ul class="nav">
+            <c:if test="${user != null}">
+                <li>
+                    <span class="badge badge-secondary">
+                        <c:out value="${user.name}"/>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/logout.do">Выйти</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+</div>
 
 <div class="container">
     <h2>Загрузка фото</h2>

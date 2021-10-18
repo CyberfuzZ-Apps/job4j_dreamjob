@@ -7,6 +7,7 @@
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
+<%@ page import="ru.job4j.dream.model.User" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,6 +30,7 @@
 <body>
 <%
     String id = request.getParameter("id");
+    User user = (User) request.getSession().getAttribute("user");
     Candidate can = new Candidate(0, "");
     if (id != null) {
         can = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
@@ -36,6 +38,16 @@
 %>
 <div class="container pt-3">
     <div class="row">
+        <ul class="nav">
+            <li>
+                    <span class="badge badge-secondary">
+                        <%=user.getName()%>
+                    </span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do">Выйти</a>
+            </li>
+        </ul>
         <div class="card" style="width: 100%">
             <div class="card-header">
                 <% if (id == null) { %>
