@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ru.job4j.dream.Config;
 
 import javax.servlet.RequestDispatcher;
@@ -24,6 +26,8 @@ import java.util.List;
  * @version 1.0
  */
 public class PhotoUploadServlet extends HttpServlet {
+
+    private static final Logger LOG = LogManager.getLogger(PhotoUploadServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -55,7 +59,7 @@ public class PhotoUploadServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
