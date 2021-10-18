@@ -2,6 +2,7 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.util.Collection;
 import java.util.Map;
@@ -20,10 +21,11 @@ public class MemStore implements Store {
 
     private static final AtomicInteger POST_ID = new AtomicInteger(4);
     private static final AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
+    private static final AtomicInteger USER_ID = new AtomicInteger();
 
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
-
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final Map<Integer, User> users = new ConcurrentHashMap<>();
 
     private MemStore() {
         posts.put(1, new Post(1, "Junior Java Job",
@@ -35,6 +37,12 @@ public class MemStore implements Store {
         candidates.put(1, new Candidate(1, "Junior Java"));
         candidates.put(2, new Candidate(2, "Middle Java"));
         candidates.put(3, new Candidate(3, "Senior Java"));
+        User user = new User();
+        user.setId(1);
+        user.setName("Admin");
+        user.setEmail("root@local");
+        user.setPassword("root");
+        users.put(1, user);
     }
 
     public static MemStore instOf() {
@@ -77,4 +85,31 @@ public class MemStore implements Store {
         return candidates.get(id);
     }
 
+    @Override
+    public Collection<User> findAllUsers() {
+        return users.values();
+    }
+
+    @Override
+    public void save(User user) {
+        if (user.getId() == 0) {
+            user.setId(POST_ID.incrementAndGet());
+        }
+        users.put(user.getId(), user);
+    }
+
+    @Override
+    public User findUserById(int id) {
+        return users.get(id);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        for (User user : users.values()) {
+            if (email.equals(user.getEmail())) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
