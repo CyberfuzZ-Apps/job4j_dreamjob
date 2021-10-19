@@ -39,15 +39,15 @@
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" placeholder="Введите имя">
+                        <input type="text" class="form-control" name="name" placeholder="Введите имя" required>
                     </div>
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email" placeholder="Введите email">
+                        <input type="email" class="form-control" name="email" placeholder="Введите email" required>
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="password" class="form-control" name="password" placeholder="Введите пароль">
+                        <input type="password" class="form-control" name="password" placeholder="Введите пароль" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Создать</button>
                     <div class="container">

@@ -29,10 +29,7 @@ public class RegServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if ("".equals(name) || "".equals(email) || "".equals(password)) {
-            req.setAttribute("error",  "Необходимо заполнить все поля!");
-            req.getRequestDispatcher("reg.jsp").forward(req, resp);
-        } else if (PsqlStore.instOf().findUserByEmail(email) == null) {
+        if (PsqlStore.instOf().findUserByEmail(email) == null) {
             PsqlStore.instOf().save(new User(
                     0,
                     name,
@@ -41,7 +38,7 @@ public class RegServlet extends HttpServlet {
             ));
             resp.sendRedirect(req.getContextPath() + "/posts.do");
         } else {
-            req.setAttribute("error",  "Пользователь с данным email уже зарегистрирован");
+            req.setAttribute("error", "Пользователь с данным email уже зарегистрирован");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
         }
     }
