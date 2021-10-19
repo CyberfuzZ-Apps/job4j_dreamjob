@@ -28,6 +28,11 @@
 <div class="container pt-3">
 
   <div class="row">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
+      </li>
+    </ul>
     <div class="card" style="width: 100%">
       <div class="card-header">
         Авторизация
@@ -36,11 +41,11 @@
         <form action="<%=request.getContextPath()%>/auth.do" method="post">
           <div class="form-group">
             <label>Почта</label>
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="email" placeholder="Введите email">
           </div>
           <div class="form-group">
             <label>Пароль</label>
-            <input type="text" class="form-control" name="password">
+            <input type="password" class="form-control" name="password" placeholder="Введите пароль">
           </div>
           <button type="submit" class="btn btn-primary">Войти</button>
           <c:if test="${not empty error}">
