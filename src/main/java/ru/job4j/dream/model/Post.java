@@ -12,12 +12,16 @@ import java.util.Objects;
  */
 public class Post {
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     private int id;
     private String name;
     private String description;
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created;
+    private String formattedDate;
+
+    public Post() {
+    }
 
     public Post(int id, String name) {
         this.id = id;
@@ -28,6 +32,13 @@ public class Post {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Post(int id, String name, String description, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.created = created;
     }
 
     public int getId() {
@@ -54,12 +65,20 @@ public class Post {
         this.description = description;
     }
 
-    public String getCreated() {
-        return FORMATTER.format(created);
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public String getFormattedDate() {
+        return FORMATTER.format(created);
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 
     @Override
@@ -85,7 +104,7 @@ public class Post {
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", description='" + description + '\''
-                + ", created=" + getCreated()
+                + ", created=" + created
                 + '}';
     }
 }

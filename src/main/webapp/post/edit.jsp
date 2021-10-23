@@ -29,13 +29,27 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
+    <script>
+        function validate() {
+            let name = $('#name');
+            let description = $('#description');
+            let array = [name, description];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].val() === '') {
+                    alert(array[i].attr('title') + ' не заполнено!');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
 <%
     String id = request.getParameter("id");
     User user = (User) request.getSession().getAttribute("user");
-    Post post = new Post(0, "");
+    Post post = new Post(0, "", "");
     if (id != null) {
         post = PsqlStore.instOf().findPostById(Integer.parseInt(id));
     }
@@ -63,11 +77,15 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
-                        <label>Название</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>"
-                               placeholder="Введите название" required>
+                        <label for="name">Название</label>
+                        <input type="text" class="form-control" name="name" id="name" title="Поле НАЗВАНИЕ"
+                               value="<%=post.getName()%>" placeholder="Введите название">
+                        <label for="description">Описание</label>
+                        <input type="text" class="form-control" name="description" id="description"
+                               title="Поле ОПИСАНИЕ"
+                               value="<%=post.getDescription()%>" placeholder="Введите описание">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

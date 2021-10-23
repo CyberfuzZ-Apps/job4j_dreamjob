@@ -25,6 +25,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    <script>
+        function validate() {
+            let name = $('#name');
+            let city = $('#city');
+            let array = [name, city];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].val() === '') {
+                    alert(array[i].attr('title') + ' не заполнено!');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -59,11 +73,17 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=can.getName()%>"
-                               placeholder="Введите имя" required>
+                        <label for="name">Имя</label>
+                        <input type="text" class="form-control" name="name" id="name" title="Поле ИМЯ"
+                               value="<%=can.getName()%>" placeholder="Введите имя">
+                        <label for="city">Город</label>
+                        <input type="text" class="form-control" name="city" id="city" title="Поле ГОРОД"
+
+<%-- todo: ниже надо вернуть город по id, а присвоить название города надо вверху через ajax и js --%>
+
+                               value="<%=can.getCity()%>" placeholder="Введите название города">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

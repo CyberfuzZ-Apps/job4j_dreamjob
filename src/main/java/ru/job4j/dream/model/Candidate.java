@@ -1,5 +1,7 @@
 package ru.job4j.dream.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -9,12 +11,35 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Candidate {
+
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
     private int id;
     private String name;
+    private String city;
+    private LocalDateTime created;
+    private String formattedDate;
+
+    public Candidate() {
+    }
 
     public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Candidate(int id, String name, String city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+    }
+
+    public Candidate(int id, String name, String city, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.created = created;
     }
 
     public int getId() {
@@ -31,6 +56,30 @@ public class Candidate {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public String getFormattedDate() {
+        return FORMATTER.format(created);
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 
     @Override
@@ -55,6 +104,8 @@ public class Candidate {
         return "Candidate{"
                 + "id=" + id
                 + ", name='" + name + '\''
+                + ", city=" + city
+                + ", created=" + created
                 + '}';
     }
 }

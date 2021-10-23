@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Класс CandidateServlet - сервлет списка кандидатов.
+ * <p>
+ * todo: добавить поле ГОРОД сюда и в БД
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
@@ -28,9 +31,12 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         req.setCharacterEncoding("UTF-8");
-        PsqlStore.instOf().save(new Candidate(
-                Integer.parseInt(req.getParameter("id")),
-                req.getParameter("name")
+        PsqlStore.instOf().save(
+                new Candidate(
+                        Integer.parseInt(req.getParameter("id")),
+                        req.getParameter("name"),
+                        req.getParameter("city"),
+                        LocalDateTime.now()
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");

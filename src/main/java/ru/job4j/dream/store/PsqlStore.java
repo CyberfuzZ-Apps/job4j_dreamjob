@@ -9,9 +9,8 @@ import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,8 +70,11 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"),
-                            it.getString("name")));
+                    posts.add(new Post(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getTimestamp("created").toLocalDateTime()));
                 }
             }
         } catch (Exception e) {
@@ -81,6 +83,7 @@ public class PsqlStore implements Store {
         return posts;
     }
 
+    /* TODO 23.10.2021   */
     @Override
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
@@ -133,10 +136,12 @@ public class PsqlStore implements Store {
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO post(name) VALUES (?)",
+                     "INSERT INTO post(name, description, created) VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setString(2, post.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -153,10 +158,12 @@ public class PsqlStore implements Store {
         boolean result = false;
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "UPDATE post SET name = ? WHERE id = ?",
+                     "UPDATE post SET name = ?, description = ?, created = ? WHERE id = ?",
                      PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, post.getName());
-            ps.setInt(2, post.getId());
+            ps.setString(2, post.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
+            ps.setInt(4, post.getId());
             result = ps.executeUpdate() > 0;
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -179,11 +186,14 @@ public class PsqlStore implements Store {
     }
 
     private Candidate create(Candidate candidate) {
+        int cityId = saveCity(candidate.getCity());
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO candidates(name) VALUES (?)",
+                     "INSERT INTO candidates(name, created, city_id) VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, candidate.getName());
+            ps.setTimestamp(2, Timestamp.valueOf(candidate.getCreated()));
+            ps.setInt(3, cityId);
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -196,7 +206,7 @@ public class PsqlStore implements Store {
         return candidate;
     }
 
-    private boolean update(Candidate candidate) {
+        private boolean update(Candidate candidate) {
         boolean result = false;
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
@@ -214,6 +224,26 @@ public class PsqlStore implements Store {
             LOG.error("Database error:", e);
         }
         return result;
+    }
+
+    /* TODO 23.10.2021 дополни если город уже есть  */
+    private int saveCity(String city) {
+        int rsl = 0;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement(
+                     "INSERT INTO cities(city) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, city);
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    rsl = id.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Database error:", e);
+        }
+        return rsl;
     }
 
     @Override
@@ -278,7 +308,9 @@ public class PsqlStore implements Store {
                 if (it.next()) {
                     post = new Post(
                             id,
-                            it.getString("name")
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getTimestamp("created").toLocalDateTime()
                     );
                 }
             }
