@@ -1,17 +1,16 @@
 <%--
   User: Евгений Зайцев
-  Date: 13.10.2021
-  Time: 15:21
+  Date: 24.10.2021
+  Time: 17:48
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.User" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<!doctype html>
-<html lang="en">
+<html>
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,9 +28,13 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <!-- Без этих двух строк AJAX не работает -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
     <script>
         function validate() {
@@ -62,9 +65,10 @@
             })
         })
     </script>
-    <title>Работа мечты</title>
+    <title>Новый кандидат</title>
 </head>
 <body>
+
 <%
     String id = request.getParameter("id");
     User user = (User) request.getSession().getAttribute("user");
@@ -73,6 +77,7 @@
         can = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
+
 <div class="container pt-3">
     <div class="row">
         <ul class="nav">
@@ -98,55 +103,26 @@
             </li>
         </ul>
         <div class="card" style="width: 100%">
-            <div id="main">
-<%--                <div class="row" id="real-estates-detail">--%>
-<%--                    <div class="col-lg-4 col-md-4 col-xs-12">--%>
-<%--                        <div class="panel panel-default">--%>
-                            <div class="card-header">
-                                    Редактирование кандидата.
-                            </div>
-
-                            <div class="card-body">
-                                <div class="text-center" id="photo">
-                                    <img src="<%=request.getContextPath()%>/download.do?name=<%=can.getId()%>"
-                                         width="150px" height="150px"/>
-                                    <p></p>
-                                    <div class="form-group">
-                                        <a href='<%=request.getContextPath()%>/upload.do?id=<%=can.getId()%>'>
-                                            <button type="submit" class="btn btn-primary">Добавить фото</button>
-                                        </a>
-                                        <p></p>
-                                        <a href='<%=request.getContextPath()%>/delete_photo.do?id=<%=can.getId()%>'>
-                                            <button type="submit" class="btn btn-primary">Удалить фото</button>
-                                        </a>
-                                    </div>
-                                    <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>"
-                                          method="post">
-                                        <div class="form-group">
-                                            <label for="name">Имя:</label>
-                                            <input type="text" class="form-control" name="name" id="name"
-                                                   title="Поле ИМЯ"
-                                                   value="<%=can.getName()%>" placeholder="Введите имя">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="city">Город (выберите из списка):</label>
-                                            <select id="city" name="city" class="form-control">
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary" onclick="return validate()">
-                                            Сохранить
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            </form>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                </div>--%>
+            <div class="card-header">
+                Новый кандидат.
+            </div>
+            <div class="card-body">
+                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input type="text" class="form-control" name="name" id="name" title="Поле ИМЯ"
+                               value="<%=can.getName()%>" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Город (выберите из списка):</label>
+                        <select id="city" name="city" class="form-control" required></select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

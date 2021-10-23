@@ -43,7 +43,7 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/new.jsp">Добавить кандидата</a>
             </li>
             <c:if test="${user != null}">
                 <li>
@@ -67,7 +67,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Дата</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -77,7 +79,16 @@
                                 <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+                                <a href='<c:url value="/del_post.do?id=${post.id}"/>'>
+                                    <i class="fa fa-trash mr-3"></i>
+                                </a>
                                 <c:out value="${post.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.description}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.formattedDate}"/>
                             </td>
                         </tr>
                     </c:forEach>

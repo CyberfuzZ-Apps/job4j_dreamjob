@@ -22,6 +22,20 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+  <script>
+    function validate() {
+      let email = $('#email');
+      let password = $('#password');
+      let array = [email, password];
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].val() === '') {
+          alert(array[i].attr('title') + ' не заполнено!');
+          return false;
+        }
+      }
+      return true;
+    }
+  </script>
   <title>Работа мечты</title>
 </head>
 <body>
@@ -40,14 +54,16 @@
       <div class="card-body">
         <form action="<%=request.getContextPath()%>/auth.do" method="post">
           <div class="form-group">
-            <label>Почта</label>
-            <input type="email" class="form-control" name="email" placeholder="Введите email" required>
+            <label for="email">Почта</label>
+            <input type="email" class="form-control" name="email" id="email" title="Поле ПОЧТА"
+                   placeholder="Введите email">
           </div>
           <div class="form-group">
-            <label>Пароль</label>
-            <input type="password" class="form-control" name="password" placeholder="Введите пароль" required>
+            <label for="password">Пароль</label>
+            <input type="password" class="form-control" name="password" id="password" title="Поле ПАРОЛЬ"
+                   placeholder="Введите пароль">
           </div>
-          <button type="submit" class="btn btn-primary">Войти</button>
+          <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
           <c:if test="${not empty error}">
             <div style="color:red; font-weight: bold; margin: 30px 0;">
               <c:out value="${error}"/>

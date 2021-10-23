@@ -33,6 +33,18 @@
 <div class="container pt-3">
     <div class="row">
         <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/new.jsp">Добавить кандидата</a>
+            </li>
             <c:if test="${user != null}">
                 <li>
                     <span class="badge badge-secondary">
@@ -52,8 +64,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Имена</th>
+                        <th scope="col"></th>
                         <th scope="col">Фото</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Город</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,17 +77,19 @@
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
-                                <c:out value="${candidate.name}"/>
+                                <a href='<c:url value="/del_cand.do?id=${candidate.id}"/>'>
+                                    <i class="fa fa-trash mr-3"></i>
+                                </a>
                             </td>
                             <td>
                                 <img src="<c:url value='/download.do?name=${candidate.id}'/>" width="100px"
                                      height="100px"/>
-                                <a href='<c:url value="/upload.do?id=${candidate.id}"/>'>
-                                    <button type="submit" class="btn btn-primary">Добавить фото</button>
-                                </a>
-                                <a href='<c:url value="/delete_photo.do?id=${candidate.id}"/>'>
-                                    <button type="submit" class="btn btn-primary">Удалить фото</button>
-                                </a>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.city}"/>
                             </td>
                         </tr>
                     </c:forEach>

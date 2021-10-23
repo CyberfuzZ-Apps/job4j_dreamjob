@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
@@ -15,9 +16,15 @@ import java.util.Collection;
 public interface Store {
     Collection<Post> findAllPosts();
 
+    Collection<Post> findTodayPosts();
+
     Collection<Candidate> findAllCandidates();
 
+    Collection<Candidate> findTodayCandidates();
+
     Collection<User> findAllUsers();
+
+    Collection<City> findAllCities();
 
     void save(Post post);
 
@@ -32,4 +39,8 @@ public interface Store {
     User findUserById(int id);
 
     User findUserByEmail(String email);
+
+    void deleteCandidate(int id);
+
+    void deletePost(int id);
 }
