@@ -38,6 +38,21 @@
             }
             return true;
         }
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/dreamjob/cities",
+                dataType: "json",
+                success: function (data) {
+                    let cities = "";
+                    for (let i = 0; i < data.length; i++) {
+                        cities += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+                    }
+                    $("#city").html(cities).prop("selectedIndex", -1);
+                }
+            })
+        })
     </script>
     <title>Работа мечты</title>
 </head>
@@ -76,12 +91,10 @@
                         <label for="name">Имя</label>
                         <input type="text" class="form-control" name="name" id="name" title="Поле ИМЯ"
                                value="<%=can.getName()%>" placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
                         <label for="city">Город</label>
-                        <input type="text" class="form-control" name="city" id="city" title="Поле ГОРОД"
-
-<%-- todo: ниже надо вернуть город по id, а присвоить название города надо вверху через ajax и js --%>
-
-                               value="<%=can.getCity()%>" placeholder="Введите название города">
+                        <select id="city" name="city" class="form-control" required></select>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>

@@ -1,7 +1,6 @@
 package ru.job4j.dream.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -12,14 +11,10 @@ import java.util.Objects;
  */
 public class Candidate {
 
-    private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
     private int id;
     private String name;
-    private String city;
+    private int cityId;
     private LocalDateTime created;
-    private String formattedDate;
 
     public Candidate() {
     }
@@ -29,16 +24,16 @@ public class Candidate {
         this.name = name;
     }
 
-    public Candidate(int id, String name, String city) {
+    public Candidate(int id, String name, int cityId) {
         this.id = id;
         this.name = name;
-        this.city = city;
+        this.cityId = cityId;
     }
 
-    public Candidate(int id, String name, String city, LocalDateTime created) {
+    public Candidate(int id, String name, int cityId, LocalDateTime created) {
         this.id = id;
         this.name = name;
-        this.city = city;
+        this.cityId = cityId;
         this.created = created;
     }
 
@@ -58,12 +53,12 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public LocalDateTime getCreated() {
@@ -72,14 +67,6 @@ public class Candidate {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
-    }
-
-    public String getFormattedDate() {
-        return FORMATTER.format(created);
-    }
-
-    public void setFormattedDate(String formattedDate) {
-        this.formattedDate = formattedDate;
     }
 
     @Override
@@ -104,7 +91,7 @@ public class Candidate {
         return "Candidate{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", city=" + city
+                + ", cityId=" + cityId
                 + ", created=" + created
                 + '}';
     }

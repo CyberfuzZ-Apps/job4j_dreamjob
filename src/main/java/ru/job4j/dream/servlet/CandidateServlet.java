@@ -35,7 +35,7 @@ public class CandidateServlet extends HttpServlet {
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name"),
-                        req.getParameter("city"),
+                        Integer.parseInt(req.getParameter("city")),
                         LocalDateTime.now()
                 )
         );
