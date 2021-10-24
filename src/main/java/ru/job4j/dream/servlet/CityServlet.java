@@ -29,7 +29,8 @@ public class CityServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<City> cities = new ArrayList<>(PsqlStore.instOf().findAllCities());
-        resp.setContentType("application/json; charset=utf-8");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(cities);
         output.write(json.getBytes(StandardCharsets.UTF_8));

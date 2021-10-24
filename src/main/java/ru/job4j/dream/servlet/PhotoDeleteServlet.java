@@ -23,7 +23,7 @@ public class PhotoDeleteServlet extends HttpServlet {
         String id = req.getParameter("id");
         File file = new File(path + id);
         file.delete();
-        resp.sendRedirect(req.getContextPath() + "/candidates.do");
+        resp.sendRedirect(req.getContextPath() + "/candidate/edit.jsp?id=" + id);
     }
 
 }

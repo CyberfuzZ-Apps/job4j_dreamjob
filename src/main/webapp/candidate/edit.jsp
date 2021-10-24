@@ -8,6 +8,7 @@
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,11 +20,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <!-- Без этих двух строк AJAX не работает -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Шаблон -->
+
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <script>
         function validate() {
@@ -49,7 +62,7 @@
                     for (let i = 0; i < data.length; i++) {
                         cities += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
                     }
-                    $("#city").html(cities).prop("selectedIndex", -1);
+                    $('#city').html(cities);
                 }
             })
         })
@@ -77,28 +90,94 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/logout.do">Выйти</a>
             </li>
         </ul>
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                <% if (id == null) { %>
-                Новый кандидат.
-                <% } else { %>
-                Редактирование кандидата.
-                <% } %>
-            </div>
-            <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
-                    <div class="form-group">
-                        <label for="name">Имя</label>
-                        <input type="text" class="form-control" name="name" id="name" title="Поле ИМЯ"
-                               value="<%=can.getName()%>" placeholder="Введите имя">
+        <%--        <div class="card" style="width: 100%">--%>
+
+
+        <div class="container">
+            <div id="main">
+                <div class="row" id="real-estates-detail">
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <header class="panel-title">
+
+                                    <% if (id == null) { %>
+                                    Новый кандидат.
+                                    <% } else { %>
+                                    Редактирование кандидата.
+                                    <% } %>
+
+                                </header>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="text-center" id="photo">
+                                    <img src="<%=request.getContextPath()%>/download.do?name=<%=can.getId()%>"
+                                         width="150px" height="150px"/>
+                                    <p></p>
+                                    <div class="form-group">
+                                        <a href='<%=request.getContextPath()%>/upload.do?id=<%=can.getId()%>'>
+                                            <button type="submit" class="btn btn-primary">Добавить фото</button>
+                                        </a>
+                                        <p></p>
+                                        <a href='<%=request.getContextPath()%>/delete_photo.do?id=<%=can.getId()%>'>
+                                            <button type="submit" class="btn btn-primary">Удалить фото</button>
+                                        </a>
+                                    </div>
+                                    <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>"
+                                          method="post">
+                                        <div class="form-group">
+                                            <label for="name">Имя:</label>
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                   title="Поле ИМЯ"
+                                                   value="<%=can.getName()%>" placeholder="Введите имя">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">Город (выберите из списка):</label>
+                                            <select id="city" name="city" class="form-control">
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" onclick="return validate()">
+                                            Сохранить
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="city">Город</label>
-                        <select id="city" name="city" class="form-control" required></select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
-                </form>
+
+                </div>
             </div>
+
+            <%--            </div>--%>
+
+            <%--            <div class="card-body">--%>
+            <%--                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">--%>
+            <%--                    <div class="form-group">--%>
+            <%--                        <label>Загрузка фото</label>--%>
+            <%--                        <%=request.getContextPath()%>/delete_photo.do?id=<%=can.getId()%>--%>
+            <%--                        <img src="<%=request.getContextPath()%>/download.do?name=<%=can.getId()%>"--%>
+            <%--                             width="100px" height="100px"/>--%>
+            <%--                        <a href='<%=request.getContextPath()%>/upload.do?id=<%=can.getId()%>'>--%>
+            <%--                            <button type="submit" class="btn btn-primary">Добавить фото</button>--%>
+            <%--                        </a>--%>
+            <%--                        <a href='<%=request.getContextPath()%>/delete_photo.do?id=<%=can.getId()%>'>--%>
+            <%--                            <button type="submit" class="btn btn-primary">Удалить фото</button>--%>
+            <%--                        </a>--%>
+            <%--                    </div>--%>
+            <%--                    <div class="form-group">--%>
+            <%--                        <label for="name">Имя</label>--%>
+            <%--                        <input type="text" class="form-control" name="name" id="name" title="Поле ИМЯ"--%>
+            <%--                               value="<%=can.getName()%>" placeholder="Введите имя">--%>
+            <%--                    </div>--%>
+            <%--                    <div class="form-group">--%>
+            <%--                        <label for="city">Город</label>--%>
+            <%--                        <select id="city" name="city" class="form-control"></select>--%>
+            <%--                    </div>--%>
+            <%--                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>--%>
+            <%--                </form>--%>
+            <%--            </div>--%>
         </div>
     </div>
 </div>
