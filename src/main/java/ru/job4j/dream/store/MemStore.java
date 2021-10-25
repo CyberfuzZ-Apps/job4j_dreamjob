@@ -160,4 +160,24 @@ public class MemStore implements Store {
     public Collection<City> findAllCities() {
         return cities.values();
     }
+
+    @Override
+    public void deleteCandidate(int id) {
+        for (Map.Entry<Integer, Candidate> set : candidates.entrySet()) {
+            if (id == set.getValue().getId()) {
+                candidates.remove(set.getKey());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void deletePost(int id) {
+        for (Map.Entry<Integer, Post> set : posts.entrySet()) {
+            if (id == set.getValue().getId()) {
+                posts.remove(set.getKey());
+                break;
+            }
+        }
+    }
 }

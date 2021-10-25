@@ -79,6 +79,9 @@
                                 <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+                                <a href='<c:url value="/del_post.do?id=${post.id}"/>'>
+                                    <i class="fa fa-trash mr-3"></i>
+                                </a>
                                 <c:out value="${post.name}"/>
                             </td>
                             <td>

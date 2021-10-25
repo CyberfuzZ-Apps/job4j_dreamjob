@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Класс RegServlet
+ * Класс RegServlet - сервлет регистрации пользователя.
  *
  * @author Evgeniy Zaytsev
  * @version 1.0

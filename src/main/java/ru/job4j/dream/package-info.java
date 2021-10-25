@@ -1,10 +1,5 @@
 /**
  *
- *
- * todo: delete candidate
- *
- * todo: delete post
- *
  * todo: Заполните README.md репозитория. В нем должны быть картинки интерфейса.
  *
  * @author Evgeniy Zaytsev

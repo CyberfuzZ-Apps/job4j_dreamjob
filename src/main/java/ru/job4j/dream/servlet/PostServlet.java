@@ -1,7 +1,5 @@
 package ru.job4j.dream.servlet;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.PsqlStore;
 
@@ -12,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
 
 /**
  * Класс PostServlet - сервлет списка вакансий.

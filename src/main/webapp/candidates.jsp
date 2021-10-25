@@ -77,6 +77,9 @@
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+                                <a href='<c:url value="/del_cand.do?id=${candidate.id}"/>'>
+                                    <i class="fa fa-trash mr-3"></i>
+                                </a>
                             </td>
                             <td>
                                 <img src="<c:url value='/download.do?name=${candidate.id}'/>" width="100px"

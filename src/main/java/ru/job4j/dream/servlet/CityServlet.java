@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Класс CityServlet
+ * Класс CityServlet - сервлет списка городов.
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
