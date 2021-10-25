@@ -15,6 +15,7 @@ public class Candidate {
     private String name;
     private int cityId;
     private LocalDateTime created;
+    private String city;
 
     public Candidate() {
     }
@@ -35,6 +36,14 @@ public class Candidate {
         this.name = name;
         this.cityId = cityId;
         this.created = created;
+    }
+
+    public Candidate(int id, String name, int cityId, LocalDateTime created, String city) {
+        this.id = id;
+        this.name = name;
+        this.cityId = cityId;
+        this.created = created;
+        this.city = city;
     }
 
     public int getId() {
@@ -69,6 +78,14 @@ public class Candidate {
         this.created = created;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,6 +110,7 @@ public class Candidate {
                 + ", name='" + name + '\''
                 + ", cityId=" + cityId
                 + ", created=" + created
+                + ", city='" + city + '\''
                 + '}';
     }
 }

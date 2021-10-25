@@ -11,7 +11,6 @@ import ru.job4j.dream.model.User;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -64,11 +63,20 @@ public class PsqlStore implements Store {
 
     @Override
     public Collection<Post> findAllPosts() {
+        String sql = "SELECT * FROM post";
+        return getPosts(sql);
+    }
+
+    @Override
+    public Collection<Post> findTodayPosts() {
+        String sql = "SELECT * FROM post WHERE date(created) = current_date";
+        return getPosts(sql);
+    }
+
+    private Collection<Post> getPosts(String sql) {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT * FROM post")
-        ) {
+             PreparedStatement ps = cn.prepareStatement(sql)) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     posts.add(new Post(
@@ -86,11 +94,23 @@ public class PsqlStore implements Store {
 
     @Override
     public Collection<Candidate> findAllCandidates() {
+        String sql = "SELECT can.id, can.name, can.created, can.city_id, c.city "
+                + "FROM candidates AS can JOIN cities AS c ON c.id = can.city_id";
+        return getCandidates(sql);
+    }
+
+    @Override
+    public Collection<Candidate> findTodayCandidates() {
+        String sql = "SELECT can.id, can.name, can.created, can.city_id, c.city "
+                + "FROM candidates AS can JOIN cities AS c ON c.id = can.city_id "
+                + "WHERE date(can.created) = current_date";
+        return getCandidates(sql);
+    }
+
+    private Collection<Candidate> getCandidates(String sql) {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT * FROM candidates")
-        ) {
+             PreparedStatement ps =  cn.prepareStatement(sql)) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     candidates.add(
@@ -98,7 +118,9 @@ public class PsqlStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getInt("city_id"),
-                                    it.getTimestamp("created").toLocalDateTime()));
+                                    it.getTimestamp("created").toLocalDateTime(),
+                                    it.getString("city")
+                            ));
                 }
             }
         } catch (Exception e) {

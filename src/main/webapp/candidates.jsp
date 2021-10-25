@@ -64,8 +64,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Имя</th>
+                        <th scope="col"></th>
                         <th scope="col">Фото</th>
+                        <th scope="col">Имя</th>
                         <th scope="col">Город</th>
                     </tr>
                     </thead>
@@ -76,17 +77,16 @@
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
-                                <c:out value="${candidate.name}"/>
                             </td>
                             <td>
                                 <img src="<c:url value='/download.do?name=${candidate.id}'/>" width="100px"
                                      height="100px"/>
-                                <a href='<c:url value="/upload.do?id=${candidate.id}"/>'>
-                                    <button type="submit" class="btn btn-primary">Добавить фото</button>
-                                </a>
-                                <a href='<c:url value="/delete_photo.do?id=${candidate.id}"/>'>
-                                    <button type="submit" class="btn btn-primary">Удалить фото</button>
-                                </a>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.city}"/>
                             </td>
                         </tr>
                     </c:forEach>

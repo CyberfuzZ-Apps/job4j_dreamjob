@@ -16,7 +16,11 @@ import java.util.Collection;
 public interface Store {
     Collection<Post> findAllPosts();
 
+    Collection<Post> findTodayPosts();
+
     Collection<Candidate> findAllCandidates();
+
+    Collection<Candidate> findTodayCandidates();
 
     Collection<User> findAllUsers();
 

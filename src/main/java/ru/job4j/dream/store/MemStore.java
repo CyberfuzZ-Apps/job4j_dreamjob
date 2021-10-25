@@ -5,7 +5,10 @@ import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,12 +33,17 @@ public class MemStore implements Store {
     private final Map<Integer, City> cities = new ConcurrentHashMap<>();
 
     private MemStore() {
-        posts.put(1, new Post(1, "Junior Java Job",
-                "A java developer with a salary of 1250 dollars is invited"));
+        posts.put(1, new Post(
+                1,
+                "Junior Java Job",
+                "A java developer with a salary of 1250 dollars is invited",
+                LocalDateTime.now()));
         posts.put(2, new Post(2, "Middle Java Job",
-                "A java developer with a salary of 2500 dollars is invited"));
+                "A java developer with a salary of 2500 dollars is invited",
+                LocalDateTime.now()));
         posts.put(3, new Post(3, "Senior Java Job",
-                "A java developer with a salary of 4375 dollars is invited"));
+                "A java developer with a salary of 4375 dollars is invited",
+                LocalDateTime.now()));
         candidates.put(1, new Candidate(1, "Junior Java"));
         candidates.put(2, new Candidate(2, "Middle Java"));
         candidates.put(3, new Candidate(3, "Senior Java"));
@@ -60,8 +68,38 @@ public class MemStore implements Store {
     }
 
     @Override
+    public Collection<Post> findTodayPosts() {
+        LocalDateTime now = LocalDateTime.now();
+        int today = now.getDayOfYear();
+        int year = now.getYear();
+        List<Post> todayPosts = new ArrayList<>();
+        for (Post post : posts.values()) {
+            if (year == post.getCreated().getYear()
+                    && today == post.getCreated().getDayOfYear()) {
+                todayPosts.add(post);
+            }
+        }
+        return todayPosts;
+    }
+
+    @Override
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
+    }
+
+    @Override
+    public Collection<Candidate> findTodayCandidates() {
+        LocalDateTime now = LocalDateTime.now();
+        int today = now.getDayOfYear();
+        int year = now.getYear();
+        List<Candidate> todayCandidates = new ArrayList<>();
+        for (Candidate c : candidates.values()) {
+            if (year == c.getCreated().getYear()
+                    && today == c.getCreated().getDayOfYear()) {
+                todayCandidates.add(c);
+            }
+        }
+        return todayCandidates;
     }
 
     @Override

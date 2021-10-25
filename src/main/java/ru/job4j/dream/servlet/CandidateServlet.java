@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 
 /**
  * Класс CandidateServlet - сервлет списка кандидатов.
- * <p>
- * todo: добавить поле ГОРОД сюда и в БД
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
