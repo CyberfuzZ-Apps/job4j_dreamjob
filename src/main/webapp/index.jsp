@@ -1,3 +1,9 @@
+<%@ page import="java.util.List" %>
+<%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ page import="ru.job4j.dream.store.PsqlStore" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="ru.job4j.dream.model.Post" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -16,6 +22,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+<%--    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
+<%--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--%>
+
+
+<%--    <script>--%>
+<%--        $(document).ready(function () {--%>
+<%--            $.ajax({--%>
+<%--                type: "GET",--%>
+<%--                url: "http://localhost:8080/dreamjob/index.do",--%>
+<%--                dataType: "json",--%>
+<%--                success: function (data) {--%>
+<%--                    let candidates = "";--%>
+<%--                    for (let i = 0; i < data.length; i++) {--%>
+<%--                        candidates += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";--%>
+<%--                    }--%>
+<%--                    $('#city').html(cities);--%>
+<%--                }--%>
+<%--            })--%>
+<%--        })--%>
+<%--    </script>--%>
+
     <title>Работа мечты</title>
 </head>
 <body>
@@ -33,6 +60,28 @@
                 Сегодняшние вакансии.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                        List<Post> posts = (List<Post>) PsqlStore.instOf().findTodayPosts();
+                        for (Post post : posts) { %>
+                    <tr>
+                        <td>
+                            <%=post.getName()%>
+                        </td>
+                        <td>
+                            <%=post.getDescription()%>
+                        </td>
+                    </tr>
+                    <%  }  %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -42,6 +91,28 @@
                 Сегодняшние кандидаты.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Город</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    List<Candidate> candidates = (List<Candidate>) PsqlStore.instOf().findTodayCandidates();
+                        for (Candidate can : candidates) { %>
+                            <tr>
+                            <td>
+                                <%=can.getName()%>
+                            </td>
+                            <td>
+                                <%=can.getCity()%>
+                            </td>
+                            </tr>
+                      <%  }  %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
