@@ -16,32 +16,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
 
-<%--    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
-<%--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--%>
-
-
-<%--    <script>--%>
-<%--        $(document).ready(function () {--%>
-<%--            $.ajax({--%>
-<%--                type: "GET",--%>
-<%--                url: "http://localhost:8080/dreamjob/index.do",--%>
-<%--                dataType: "json",--%>
-<%--                success: function (data) {--%>
-<%--                    let candidates = "";--%>
-<%--                    for (let i = 0; i < data.length; i++) {--%>
-<%--                        candidates += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";--%>
-<%--                    }--%>
-<%--                    $('#city').html(cities);--%>
-<%--                }--%>
-<%--            })--%>
-<%--        })--%>
-<%--    </script>--%>
+    <%List<Candidate> candidates = (List<Candidate>) PsqlStore.instOf().findTodayCandidates();%>
+    <%List<Post> posts = (List<Post>) PsqlStore.instOf().findTodayPosts();%>
 
     <title>Работа мечты</title>
 </head>
@@ -68,9 +53,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <%
-                        List<Post> posts = (List<Post>) PsqlStore.instOf().findTodayPosts();
-                        for (Post post : posts) { %>
+                    <% for (Post post : posts) { %>
                     <tr>
                         <td>
                             <%=post.getName()%>
@@ -79,7 +62,7 @@
                             <%=post.getDescription()%>
                         </td>
                     </tr>
-                    <%  }  %>
+                    <% } %>
                     </tbody>
                 </table>
             </div>
@@ -99,18 +82,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <%
-                    List<Candidate> candidates = (List<Candidate>) PsqlStore.instOf().findTodayCandidates();
-                        for (Candidate can : candidates) { %>
-                            <tr>
-                            <td>
-                                <%=can.getName()%>
-                            </td>
-                            <td>
-                                <%=can.getCity()%>
-                            </td>
-                            </tr>
-                      <%  }  %>
+                        <% for (Candidate can : candidates) { %>
+                    <tr>
+                        <td>
+                            <%=can.getName()%>
+                        </td>
+                        <td>
+                            <%=can.getCity()%>
+                        </td>
+                    </tr>
+                    <% } %>
                     </tbody>
                 </table>
             </div>
