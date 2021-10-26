@@ -23,21 +23,21 @@ Dream Job - приложение "биржа работы".
 - Maven
 - Travis CI
 
-![](images/img1.png)
+![](images/pic1.png)
 
-![](images/img2.png)
+![](images/pic2.png)
 
-![](images/img3.png)
+![](images/pic3.png)
 
-![](images/img4.png)
+![](images/pic4.png)
 
-![](images/img5.png)
+![](images/pic5.png)
 
-![](images/img6.png)
+![](images/pic6.png)
 
-![](images/img7.png)
+![](images/pic7.png)
 
-![](images/img8.png)
+![](images/pic8.png)
 
 ## Сборка и установка. 
 Сборка проекта осуществляется в WAR-архив с помощью Maven:
@@ -46,6 +46,8 @@ Dream Job - приложение "биржа работы".
 
 с последующим развертыванием в контейнере сервлетов 
 (Apache Tomcat и т.п.) 
+
+Скрипты для базы данных: db/schema.sql
 
 ## Контакты.
 Если у вас есть какие-либо вопросы, не стесняйтесь обращаться ко мне:
