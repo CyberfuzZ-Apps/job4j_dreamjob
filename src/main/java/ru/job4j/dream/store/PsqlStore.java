@@ -9,7 +9,7 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +31,10 @@ public class PsqlStore implements Store {
     private PsqlStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
-                new FileReader("db.properties")
+                new InputStreamReader(
+                        PsqlStore.class.getClassLoader()
+                                .getResourceAsStream("db.properties")
+                )
         )) {
             cfg.load(io);
         } catch (Exception e) {
@@ -445,6 +448,19 @@ public class PsqlStore implements Store {
                      "DELETE FROM post WHERE id = ?")) {
             ps.setInt(1, id);
             ps.executeUpdate();
+        } catch (Exception e) {
+            LOG.error("Database error:", e);
+        }
+    }
+
+    @Override
+    public void clear(String name) {
+        String sql = "ALTER TABLE " + name + " ALTER COLUMN " + "id" + " RESTART WITH 1";
+        String sql2 = "DELETE FROM " + name;
+        try (Connection cn = pool.getConnection();
+             Statement statement = cn.createStatement()) {
+            statement.execute(sql);
+            statement.execute(sql2);
         } catch (Exception e) {
             LOG.error("Database error:", e);
         }

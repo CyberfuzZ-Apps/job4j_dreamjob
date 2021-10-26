@@ -180,4 +180,9 @@ public class MemStore implements Store {
             }
         }
     }
+
+    @Override
+    public void clear(String name) {
+
+    }
 }

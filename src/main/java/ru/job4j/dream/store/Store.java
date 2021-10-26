@@ -43,4 +43,6 @@ public interface Store {
     void deleteCandidate(int id);
 
     void deletePost(int id);
+
+    void clear(String name);
 }
