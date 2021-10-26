@@ -3,6 +3,7 @@
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
+<%@ page import="ru.job4j.dream.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
@@ -27,6 +28,7 @@
 
     <%List<Candidate> candidates = (List<Candidate>) PsqlStore.instOf().findTodayCandidates();%>
     <%List<Post> posts = (List<Post>) PsqlStore.instOf().findTodayPosts();%>
+    <%User user = (User) request.getSession().getAttribute("user");%>
 
     <title>Работа мечты</title>
 </head>
@@ -34,10 +36,40 @@
 <div class="container">
     <div class="row">
         <ul class="nav">
+            <%if (user != null) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/index.do">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/new.jsp">Добавить кандидата</a>
+            </li>
+            <li>
+                    <span class="badge badge-secondary">
+                        <%=user.getName()%>
+                    </span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/logout.do">Выйти</a>
+            </li>
+            <% } else { %>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
+            </li>
+            <% } %>
         </ul>
+
     </div>
     <div class="row">
         <div class="card" style="width: 100%">
@@ -82,13 +114,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <% for (Candidate can : candidates) { %>
+                    <% for (Candidate can : candidates) { %>
                     <tr>
                         <td>
                             <%=can.getName()%>
                         </td>
                         <td>
-                            <%=can.getCity()%>
+                            <%=can.getCity().getName()%>
                         </td>
                     </tr>
                     <% } %>

@@ -13,9 +13,8 @@ public class Candidate {
 
     private int id;
     private String name;
-    private int cityId;
+    private City city;
     private LocalDateTime created;
-    private String city;
 
     public Candidate() {
     }
@@ -25,25 +24,17 @@ public class Candidate {
         this.name = name;
     }
 
-    public Candidate(int id, String name, int cityId) {
+    public Candidate(int id, String name, City city) {
         this.id = id;
         this.name = name;
-        this.cityId = cityId;
-    }
-
-    public Candidate(int id, String name, int cityId, LocalDateTime created) {
-        this.id = id;
-        this.name = name;
-        this.cityId = cityId;
-        this.created = created;
-    }
-
-    public Candidate(int id, String name, int cityId, LocalDateTime created, String city) {
-        this.id = id;
-        this.name = name;
-        this.cityId = cityId;
-        this.created = created;
         this.city = city;
+    }
+
+    public Candidate(int id, String name, City city, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.created = created;
     }
 
     public int getId() {
@@ -62,14 +53,6 @@ public class Candidate {
         this.name = name;
     }
 
-    public int getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
-
     public LocalDateTime getCreated() {
         return created;
     }
@@ -78,11 +61,11 @@ public class Candidate {
         this.created = created;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -108,9 +91,8 @@ public class Candidate {
         return "Candidate{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", cityId=" + cityId
+                + ", city=" + city
                 + ", created=" + created
-                + ", city='" + city + '\''
                 + '}';
     }
 }
