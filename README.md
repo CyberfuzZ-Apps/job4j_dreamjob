@@ -23,6 +23,13 @@ Dream Job - приложение "биржа работы".
 - Maven
 - Travis CI
 
+Тестирование:
+
+- Liquibase
+- H2DB
+- JUnit
+- Hamcrest
+
 ![](images/pic1.png)
 
 ![](images/pic2.png)
@@ -40,14 +47,26 @@ Dream Job - приложение "биржа работы".
 ![](images/pic8.png)
 
 ## Сборка и установка. 
-Сборка проекта осуществляется в WAR-архив с помощью Maven:
 
-`mvn install`
+В Maven создано два профиля:
 
-с последующим развертыванием в контейнере сервлетов 
-(Apache Tomcat и т.п.) 
+- `test` - тестирование c Liquibase в базе данных H2DB.
+
+`mvn test -Ptest`
+
+- `production` - сборка в WAR-архив для развертывания 
+в контейнере сервлетов (Apache Tomcat и т.п.)
+
+`mvn install -Pproduction -Dmaven.test.skip=true`
+
+
 
 Скрипты для базы данных: db/schema.sql
+
+
+
+
+
 
 ## Контакты.
 Если у вас есть какие-либо вопросы, не стесняйтесь обращаться ко мне:
