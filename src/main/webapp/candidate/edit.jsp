@@ -50,7 +50,7 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8080/dreamjob/cities",
+                url: "/dreamjob/cities",
                 dataType: "json",
                 success: function (data) {
                     let cities = "";
