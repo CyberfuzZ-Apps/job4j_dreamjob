@@ -13,7 +13,12 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Класс PsqlStoreTest
+ * Класс PsqlStoreTest - тест класса хранилища PsqlStore.
+ * Тест запускается из Maven с профилем "test":
+ *
+ * mvn test -Ptest
+ *
+ * Настройки тестовой базы данных: /test/resources/db.properties
  *
  * @author Evgeniy Zaytsev
  * @version 1.0
