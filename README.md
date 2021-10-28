@@ -23,6 +23,7 @@ Dream Job - приложение "биржа работы".
 - Log4j
 - Maven
 - Travis CI
+- Codecov
 
 Тестирование:
 
